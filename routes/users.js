@@ -1,27 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var users = [{id:1, content:""}]
+var users = [{id:1, user:""}]
 
 /* GET users. */
-router.get('/users', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.json(users);
 });
 router.post('/:id', function(req, res, next) {
   userId = req.params.id;
-  users = req.body;
+  var newUsers = req.body;
+  users.push(newUsers)
   res.json(users);
 });
 router.put('/:id', function(req, res, next) {
-  updateusers = req.body;
+  var updateUers = req.body;
   userId = req.params.id;
-  users.forEach(users => {
-    if (users.id === parseInt(userId)){
-      users.content = updateusers.content;
+  users.forEach(userr => {
+    if (userr.id === parseInt(userId)){
+      userr.user = updateUsers.user;
     }
   });
   res.json(users);
 });
 router.delete('/:id', function(req, res, next) {
-  res.json({mssg:"Deleted", users:users.filter(users => users.id !== parseInt(req.params.id))});
+  res.json({mssg:"Deleted", users:users.filter(userr => userr.id !== parseInt(req.params.id))});
 });
 module.exports = router;

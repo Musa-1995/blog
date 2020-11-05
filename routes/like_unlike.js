@@ -1,27 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var like_unlike = [{id:1, content:""}]
+var like_unlike = [{id:1, num:""}]
 
 /* GET like_unlike. */
-router.get('/like_unlike', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.json(like_unlike);
 });
 router.post('/:id', function(req, res, next) {
-  userId = req.params.id;
-  like_unlike = req.body;
+  likeId = req.params.id;
+  var new_like_unlike = req.body;
+  like_unlike.push(new_like_unlike);
   res.json(like_unlike);
 });
 router.put('/:id', function(req, res, next) {
-  updatelike_unlike = req.body;
-  userId = req.params.id;
-  like_unlike.forEach(categories => {
-    if (like_unlike.id === parseInt(userId)){
-      like_unlike.content = updatelike_unlike.content;
+  var updatelike_unlike = req.body;
+  likeId = req.params.id;
+  like_unlike.forEach(like => {
+    if (like.id === parseInt(likeId)){
+      like.num = updatelike_unlike.num;
     }
   });
   res.json(like_unlike);
 });
 router.delete('/:id', function(req, res, next) {
-  res.json({mssg:"Deleted", like_unlike:categories.filter(like_unlike => like_unlike.id !== parseInt(req.params.id))});
+  res.json({mssg:"Deleted", like_unlike:like_unlike.filter(like => like.id !== parseInt(req.params.id))});
 });
 module.exports = router;

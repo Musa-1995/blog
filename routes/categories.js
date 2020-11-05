@@ -1,27 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var categories = [{id:1, content:""}]
+var categories = [{id:1, category:""}];
 
 /* GET categories. */
-router.get('/categories', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.json(categories);
 });
 router.post('/:id', function(req, res, next) {
-  userId = req.params.id;
-  categories = req.body;
+  categoryId = req.params.id;
+  var newCategories = req.body;
+  categories.push(newCategories)
   res.json(categories);
 });
 router.put('/:id', function(req, res, next) {
-  updateCategories = req.body;
-  userId = req.params.id;
-  categories.forEach(categories => {
-    if (categories.id === parseInt(userId)){
-      categories.content = updateCategories.content;
+  var updateCategories = req.body;
+  categoryId = req.params.id;
+  categories.forEach(categoryy => {
+    if (categoryy.id === parseInt(categoryId)){
+      categoryy.category = updateCategories.category;
     }
   });
   res.json(categories);
 });
 router.delete('/:id', function(req, res, next) {
-  res.json({mssg:"Deleted", categories:categories.filter(categories => categories.id !== parseInt(req.params.id))});
+  res.json({mssg:"Deleted", categories:categories.filter(categoryy => categoryy.id !== parseInt(req.params.id))});
 });
 module.exports = router;
